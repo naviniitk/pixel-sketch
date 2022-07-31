@@ -1,37 +1,62 @@
 const path = require("path");
+const config = require("config");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const CONFIG = config.has("public") ? config.get("public") : {};
+
 module.exports = {
-  entry: './src/index.tsx',
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
+  entry: "./src/index.tsx",
+
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    extensions: [".ts", ".tsx", ".js"],
     alias: {
       "@components": path.resolve(__dirname, "src/app/components/index"),
+      "@images": path.resolve(__dirname, "src/app/images"),
     },
+    fallback: {
+      path: false,
+    },
+  },
+  output: {
+    path: path.join(__dirname, "/dist"),
+    publicPath: "/",
+    filename: "bundle.min.js",
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "./"),
+    },
+
+    compress: true,
+    port: 3000,
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         loader: "ts-loader",
-      },
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "source-map-loader",
+        options: { compilerOptions: { noEmit: false } },
       },
       {
         test: /\.css$/,
-        loader: "css-loader",
+        use: [
+          "style-loader", // creates style nodes from JS strings
+          "css-loader", // translates CSS into CommonJS
+        ],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, "src", "index.html"),
+      template: "./src/index.html",
+    }),
+    new webpack.DefinePlugin({
+      CONFIG: JSON.stringify(CONFIG),
     }),
   ],
-}
+};

@@ -2,7 +2,11 @@ import * as React from "react";
 import { DashboardComponent } from "@components";
 
 const App: React.FC = () => {
-  return <div>React Boilerplate</div>;
+  return (
+    <div>
+      <DashboardComponent />
+    </div>
+  );
 };
 
 export default App;
