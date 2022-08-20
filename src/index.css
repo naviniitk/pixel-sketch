@@ -2,3 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+:root {
+  --grid-columns: repeat(8, 1fr);
+  --grid-square-color: "#fff";
+}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { GridComponent } from "@components";
+import "./dashboard.css"
 
 const DashboardComponent: React.FC = () => {
   const [number, setNumber] = React.useState("");

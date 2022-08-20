@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  grid-template-columns: var(--grid-columns);
   margin: auto;
   box-sizing: border-box;
 }

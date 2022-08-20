@@ -1,5 +1,6 @@
 import { GridSquare } from "@components";
 import * as React from "react";
+import styled from "styled-components";
 import "./grid-style.css";
 
 interface GridProps {
@@ -11,7 +12,9 @@ const GridComponent: React.FC<GridProps> = ({ size }) => {
   const grid = () => {
     let gridElementsArray: JSX.Element[] = [];
     for (let i = 0; i < size * size; i++) {
-      const gridElement = <GridSquare key={i}></GridSquare>;
+      document.documentElement.className = `gridsquare-${i}`;
+      document.documentElement.style.setProperty(`--grid-square-color-${i}`, '#fff');
+      const gridElement = <GridSquare squareNumber={i} key={i}></GridSquare>;
       gridElementsArray.push(gridElement);
     }
     setGridArray(gridElementsArray);
@@ -21,14 +24,12 @@ const GridComponent: React.FC<GridProps> = ({ size }) => {
     grid();
   }, [size]);
 
-  return (
-    <div
-      className="container"
-      style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
-    >
-      {...gridArray}
-    </div>
+  document.documentElement.style.setProperty(
+    "--grid-columns",
+    `repeat(${size}, 1fr)`
   );
+
+  return <div className="container">{...gridArray}</div>;
 };
 
 export default GridComponent;
