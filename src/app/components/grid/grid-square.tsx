@@ -1,38 +1,40 @@
 import * as React from "react";
+import styled from "styled-components";
 
-interface SquareProps {
-  squareNumber: number;
-  squareColor?: string;
+interface StyledGridSquareProp {
+  squareColor: string;
 }
 
-const SquareComponent: React.FC<SquareProps> = (props) => {
-  const { squareNumber, squareColor } = props;
-  console.log("square component");
+const StyledGridSquare = styled.div`
+  background-color: ${(props: StyledGridSquareProp) => props.squareColor};
+`;
+
+interface SquareProps {
+  pickedColor: string;
+  isRandom: boolean;
+}
+
+const SquareComponent: React.FC<SquareProps> = ({ pickedColor, isRandom }) => {
   const [color, setColor] = React.useState("white");
+  const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.buttons === 1) {
-      setColor("black");
+      if (isRandom) {
+        setColor(randomColor);
+      } else {
+        setColor(pickedColor);
+      }
     }
   };
 
-  React.useEffect(() => {
-    const element = document.querySelectorAll(
-      `.gridsquare-${squareNumber}`
-    ) as NodeListOf<HTMLElement>;
-    element.forEach((el) => (el.style.backgroundColor = color));
-  }, [color]);
-
-  const handleClick = () => {
-    setColor("black");
-  };
   return (
-    <div
-      id={`gridsquare-${squareNumber}`}
-      className={`gridsquare gridsquare-${squareNumber}`}
+    <StyledGridSquare
+      squareColor={color}
+      className="gridsquare"
       onMouseMove={handleMouseMove}
       onMouseOver={handleMouseMove}
-      onClick={handleClick}
-    ></div>
+      onClick={handleMouseMove}
+    ></StyledGridSquare>
   );
 };
 

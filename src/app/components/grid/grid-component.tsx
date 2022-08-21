@@ -5,16 +5,25 @@ import "./grid-style.css";
 
 interface GridProps {
   size: number;
+  pickedColor: string;
+  resetPickedColor: Function;
+  isRandom: boolean;
 }
 
-const GridComponent: React.FC<GridProps> = ({ size }) => {
+const GridComponent: React.FC<GridProps> = ({
+  size,
+  pickedColor,
+  resetPickedColor,
+  isRandom,
+}) => {
   const [gridArray, setGridArray] = React.useState([]);
+
   const grid = () => {
     let gridElementsArray: JSX.Element[] = [];
     for (let i = 0; i < size * size; i++) {
-      document.documentElement.className = `gridsquare-${i}`;
-      document.documentElement.style.setProperty(`--grid-square-color-${i}`, '#fff');
-      const gridElement = <GridSquare squareNumber={i} key={i}></GridSquare>;
+      const gridElement = (
+        <GridSquare pickedColor={pickedColor} isRandom={isRandom} key={i} />
+      );
       gridElementsArray.push(gridElement);
     }
     setGridArray(gridElementsArray);
@@ -22,7 +31,7 @@ const GridComponent: React.FC<GridProps> = ({ size }) => {
 
   React.useEffect(() => {
     grid();
-  }, [size]);
+  }, [size, pickedColor, isRandom]);
 
   document.documentElement.style.setProperty(
     "--grid-columns",

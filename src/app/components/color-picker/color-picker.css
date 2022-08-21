@@ -1,0 +1,23 @@
+.color-picker {
+  outline: none;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin: 10px;
+}
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+.color-picker-container {
+  display: flex;
+  align-items: center;
+}

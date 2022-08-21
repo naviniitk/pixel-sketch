@@ -5,14 +5,7 @@
   box-sizing: border-box;
 }
 .gridsquare {
-  border-width: 0.1px;
   aspect-ratio: 1 / 1;
   min-width: 4px;
   min-height: 4px;
-  border-style: solid;
-  border-color: black;
-}
-
-.gridsquare:hover {
-  background-color: #eeeeee;
 }
